@@ -20,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -56,6 +57,12 @@ public class EmployeeController {
             return new ResponseEntity<>(employeeDto.orElse(new EmployeeDto()), HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(employeeDto.orElse(new EmployeeDto()), HttpStatus.FOUND);
+    }
+
+    @GetMapping("/all")
+    public List<EmployeeDto> getEmployees(@RequestParam Long count) {
+        List<EmployeeDto> employeeDtos = employeeService.getEmployees(count);
+        return employeeDtos;
     }
 
     @GetMapping("/download/{fileName:.+}")

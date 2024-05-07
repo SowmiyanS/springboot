@@ -5,6 +5,7 @@ import techno_kryon.spring_boot.Dto.EmployeeCreateDto;
 import techno_kryon.spring_boot.Dto.EmployeeDto;
 import techno_kryon.spring_boot.Entity.Employee;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,6 +18,9 @@ public interface EmployeeService {
     public EmployeeDto updateEmployee(EmployeeCreateDto employeeCreateDto, Integer empId);
     //Delete
     public EmployeeDto deleteEmployee(Integer empId);
+
+    //Read
+    public List<EmployeeDto> getEmployees(Long count);
 
     // Dto to Entity and vice versa
     public EmployeeDto convertToEmpDto(Employee employee);
