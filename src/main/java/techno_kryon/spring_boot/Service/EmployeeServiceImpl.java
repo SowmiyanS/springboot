@@ -8,8 +8,8 @@ import techno_kryon.spring_boot.Dto.EmployeeDto;
 import techno_kryon.spring_boot.Entity.Employee;
 import techno_kryon.spring_boot.Repository.EmployeeRepository;
 
-import java.sql.Timestamp;
-import java.time.Instant;
+import java.sql.Timestamp;      // Reference : https://www.javatpoint.com/java-timestamp
+import java.time.Instant;       // Reference : https://www.javatpoint.com/java-timestamp
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDto createEmployee(EmployeeCreateDto employeeCreateDto) {
-        EmployeeCreateDto newEmployeeCreateDto = new EmployeeCreateDto(null, employeeCreateDto.getEmpName(), employeeCreateDto.getEmpEmail(), employeeCreateDto.getEmpAge(), employeeCreateDto.getEmpPhone(), Timestamp.from(Instant.now())+"", "Api", employeeCreateDto.getEmpModifiedOn(), employeeCreateDto.getEmpModifiedBy(), employeeCreateDto.getEmpProfile(), employeeCreateDto.getEmpPassword());
+        EmployeeCreateDto newEmployeeCreateDto = new EmployeeCreateDto(null, employeeCreateDto.getEmpName(), employeeCreateDto.getEmpEmail(), employeeCreateDto.getEmpAge(), employeeCreateDto.getEmpPhone(), Timestamp.from(Instant.now())+"", "Api", employeeCreateDto.getEmpModifiedOn(), employeeCreateDto.getEmpModifiedBy(), employeeCreateDto.getEmpProfile(), employeeCreateDto.getEmpPassword());      // Reference : https://www.javatpoint.com/java-timestamp
         Optional<Employee> employee = convertFromEmpCreateDto(newEmployeeCreateDto);
         Employee employeeSaved = employeeRepository.save(employee.orElseThrow(() -> new RuntimeException("Cannot Convert employeeCreateDto to Employee in createEmployee")));
         EmployeeDto employeeDtoSaved = convertToEmpDto(employeeSaved);
@@ -42,7 +42,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Long cnt = employeeRepository.count();
         List<EmployeeDto> employeeDtos = new ArrayList<EmployeeDto>();
         //Iterable<Employee> employees = employeeRepository.findAllByOrderByEmpCreatedOnAsc();
-        Iterable<Employee> employees = employeeRepository.findAll(Sort.by(Sort.Direction.DESC, "empCreatedOn"));
+        Iterable<Employee> employees = employeeRepository.findAll(Sort.by(Sort.Direction.DESC, "empCreatedOn"));    // reference : https://www.baeldung.com/spring-data-sorting
         employees.forEach((employee) -> {
             employeeDtos.add(convertToEmpDto(employee));
         });
@@ -66,7 +66,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         else {
             oEmployeeDto = oldEmployeeDto.orElseThrow(() -> new RuntimeException("The given employee Does not exits in the database"));
         }
-        EmployeeCreateDto newEmployeeCreateDto = new EmployeeCreateDto(employeeCreateDto.getEmpId(), employeeCreateDto.getEmpName(), employeeCreateDto.getEmpEmail(), employeeCreateDto.getEmpAge(), employeeCreateDto.getEmpPhone(), oEmployeeDto.getEmpCreatedOn(), oEmployeeDto.getEmpCreatedBy(), Timestamp.from(Instant.now())+"", "Api", employeeCreateDto.getEmpProfile(), employeeCreateDto.getEmpPassword());
+        EmployeeCreateDto newEmployeeCreateDto = new EmployeeCreateDto(employeeCreateDto.getEmpId(), employeeCreateDto.getEmpName(), employeeCreateDto.getEmpEmail(), employeeCreateDto.getEmpAge(), employeeCreateDto.getEmpPhone(), oEmployeeDto.getEmpCreatedOn(), oEmployeeDto.getEmpCreatedBy(), Timestamp.from(Instant.now())+"", "Api", employeeCreateDto.getEmpProfile(), employeeCreateDto.getEmpPassword());      // Reference : https://www.javatpoint.com/java-timestamp
         Optional<Employee> employee = convertFromEmpCreateDto(newEmployeeCreateDto);
         Employee employeeSaved = employeeRepository.save(employee.orElseThrow(() -> new RuntimeException("Cannot Convert employeeCreate Dto to Employee in updateEmployee")));
         EmployeeDto employeeDtoUpdated = convertToEmpDto(employeeSaved);
